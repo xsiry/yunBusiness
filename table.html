@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-xs-12">
+        <a href="javascript:void(0);" class="go_back">返回</a>
+    </div>
+</div>
+<div class="container x-grid text-center">
+</div>
+<script type="text/javascript">
+var initData = [{ type: 'bpwpsy', data: [{ title: '爆破物品使用、购买、运输、储存许可指南', rows: [{ name: '事项类型', text: '行政许可事项' }] }] }];
+
+$(document).ready(function() {
+    var type = $('input[name="type"]').val();
+    var thtml = '';
+    $.each(initData, function(i, n) {
+        var data = n.type == type ? n.data : [];
+        $.each(data, function(i, m) {
+            thtml += '<div class="row"><div class="col-xs-12">' + m.title + '</div></div>';
+            $.each(m.rows, function(i, r) {
+                thtml += '<div class="row">' +
+                    '<div class="col-xs-3">' + r.name + '</div>' +
+                    '<div class="col-xs-9 text-left">' + r.text + '</div>' +
+                    '</div>';
+            });
+        });
+    });
+    $('.x-grid').append(thtml);
+
+    $('.go_back').on('click', function() {
+        $('.x-content').hide();
+        $('.x-menus').show();
+    })
+});
+</script>
