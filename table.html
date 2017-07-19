@@ -1,29 +1,50 @@
-<div class="row">
-    <div class="col-xs-12">
-        <a href="javascript:void(0);" class="go_back">返回</a>
-    </div>
+<div class="go_back">
+    <a class="go_back_btn" href="javascript:void(0);">
+      <svg class="svg_icon" viewBox="0 0 1024 1024">
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow_svg"></use>
+      </svg>
+    </a>
 </div>
 <div class="container x-grid text-center">
 </div>
 <script type="text/javascript">
-var initData = [{ type: 'bpwpsy', data: [{ title: '爆破物品使用、购买、运输、储存许可指南', rows: [{ name: '事项类型', text: '行政许可事项' }] }] }];
+var initData = [
+  {
+    type: 'bpwpsy', data: { title: '爆破物品使用、购买、运输、储存许可指南', rows: [{ name: '事项类型', text: '行政许可事项' }] }
+  },
+  {
+    type: 'kkqyyzxkzn', data: { title: '刊刻企业印章许可指南', rows: [{ name: '事项类型', text: '行政许可事项' }] }
+  },
+  {
+    type: 'jbdxyhrfhdzn', data: { title: '举办大型焰火燃放活动指南', rows: [{ name: '事项类型', text: '行政许可事项' }] }
+  },
+  {
+    type: '', data: { title: '爆破物品使用、购买、运输、储存许可指南', rows: [{ name: '事项类型', text: '行政许可事项' }] }
+  },
+  {
+    type: '', data: { title: '爆破物品使用、购买、运输、储存许可指南', rows: [{ name: '事项类型', text: '行政许可事项' }] }
+  }
+];
 
 $(document).ready(function() {
     var type = $('input[name="type"]').val();
     var thtml = '';
     $.each(initData, function(i, n) {
-        var data = n.type == type ? n.data : [];
-        $.each(data, function(i, m) {
-            thtml += '<div class="row"><div class="col-xs-12">' + m.title + '</div></div>';
-            $.each(m.rows, function(i, r) {
-                thtml += '<div class="row">' +
-                    '<div class="col-xs-3">' + r.name + '</div>' +
-                    '<div class="col-xs-9 text-left">' + r.text + '</div>' +
-                    '</div>';
-            });
+        var data = {};
+        if (n.type == type) {
+            data = n.data;
+        } else {
+            return;
+        }
+        thtml += '<div class="row"><div class="col-xs-12">' + data.title + '</div></div>';
+        $.each(data.rows, function(i, r) {
+            thtml += '<div class="row">' +
+                '<div class="col-xs-3">' + r.name + '</div>' +
+                '<div class="col-xs-9 text-left">' + r.text + '</div>' +
+                '</div>';
         });
     });
-    $('.x-grid').append(thtml);
+    $('.x-grid').empty().append(thtml);
 
     $('.go_back').on('click', function() {
         $('.x-content').hide();

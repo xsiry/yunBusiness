@@ -10,39 +10,83 @@
     <meta name="author" content="xsiry">
     <title></title>
     <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
+    <svg class="txp_svg_sprite txp_svg_sprite_head" display="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <symbol id="arrow_svg">
+            <path d="M465.301422 515.736091l206.865441-206.865441c6.012947-6.012947 6.012947-15.763009 0-21.775956l-50.808176-50.808176c-6.012947-6.012947-15.763009-6.012947-21.776979 0l-267.463588 267.463588-2.133593 2.133593c-5.440919 5.440919-5.440919 14.262842 0 19.703761l1.889023 1.889023 266.855744 266.855744c6.701632 6.701632 17.107633 6.375198 23.727401-0.24457l48.178279-48.178279c6.859221-6.859221 6.859221-17.980513 0-24.840758L465.301422 515.736091z" p-id="4374" fill="#0a548b"></path>
+        </symbol>
+    </svg>
 </head>
-
 <style type="text/css">
-    html, body {
-        margin: 0;
-        padding: 5px;
-        font-family: "微软雅黑";
-    }
-    .x-menus {
-        margin-top: 10px;
-    }
-    .x-menus #myTabContent>div>div {
-        margin-top: 10px;
-    }
+html,
+body {
+    margin: 0;
+    padding: 5px;
+    font-family: "微软雅黑";
+    font-size: 1rem;
+}
 
-    .x-content {
-        display: none;
-    }
+.svg_icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: top;
+    pointer-events: none;
+}
 
-    .x-grid {
-        margin-top: 10px;
-        border: 1px solid #b4d6f1;
-        border-top: 4px solid #b4d6f1;
-        border-left: 0;
-        border-bottom: 0;
-        background-color: #FFF;
-    }
+.x-menus {
+    margin-top: 10px;
+}
 
-    .x-grid [class^=col-] {
-        padding: 15px;
-        border-left: 1px solid #b4d6f1;
-        border-bottom: 1px solid #b4d6f1;
-    }
+.x-menus #myTabContent>div>div {
+    margin-top: 10px;
+}
+
+.x-content {
+    display: none;
+}
+
+.x-grid {
+    margin-top: 50px;
+    border: 1px solid #b4d6f1;
+    border-top: 4px solid #b4d6f1;
+    border-left: 0;
+    border-bottom: 0;
+    background-color: #FFF;
+}
+
+.x-grid [class^=col-] {
+    padding: 15px;
+    border-left: 1px solid #b4d6f1;
+    border-bottom: 1px solid #b4d6f1;
+}
+
+.x-text {
+    margin-top: 50px;
+    background-color: #FFF;
+}
+
+.go_back {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #d8d8d8;
+    margin-left: -10px;
+    z-index: 100;
+}
+
+.go_back a {
+    width: 20%;
+    height: 100%;
+    display: block;
+}
+
+.go_back .svg_icon {
+    width: 30px;
+    height: 30px;
+    margin-top: 3px;
+}
 </style>
 
 <body>
@@ -54,7 +98,7 @@
                     办事指南</a>
                 </li>
                 <li role="presentation" class="">
-                    <a href="#flfg" role="tab" id="flfg-tab" data-type="flfg"  data-toggle="tab" aria-controls="flfg" aria-expanded="false">
+                    <a href="#flfg" role="tab" id="flfg-tab" data-type="flfg" data-toggle="tab" aria-controls="flfg" aria-expanded="false">
                     法律法规</a>
                 </li>
             </ul>
@@ -75,90 +119,134 @@
 <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="lib/bootstrap/bootstrap.min.js"></script>
 <script type="text/javascript">
-    var jsonBsfw = [{type: '治安业务', tab_id:'zafw', list: [{title: '爆破物品使用、购买、运输、储存许可指南', href: 'bpwpsy'}, {title: '刊刻企业印章许可指南', href: ''}, {title: '举办大型焰火燃放活动指南', href: ''}]},{type: '治安业务', tab_id:'zafws', list: [{title: '爆破物品使用、购买、运输、储存许可指南', href: 'bpwpsy'}, {title: '刊刻企业印章许可指南', href: ''}, {title: '举办大型焰火燃放活动指南', href: ''}]}];
-
-    var jsonFlfg = [{type: '执法依据', tab_id:'zfyj', list: [{title: '公安机关人民警察现场制止违法犯罪行为操作规程', href: 'bpwpsy'}, {title: '中华人民共和国禁毒法', href: ''}, {title: '中华人民共和国治安管理处罚', href: ''}]}];
-
-    $(document).ready(function() {
-        bind();
-        $('#myTabs a:first').trigger('click');
-    });
-
-    function bind() {
-        $.root = $('body');
-
-        $.root.on('click', '#myTabs a', function(e) {
-            var key = {
-                bsfw: {data: jsonBsfw, type: 'bsfw', showHtml: 'table.html'},
-                flfg: {data: jsonFlfg, type: 'flfg', showHtml: 'content.html'}
-            }
-            var me = $(this);
-            var type = me.data('type');
-            generateTabList(key[type]);
-        })
-
-        $.root.on('click', '.tab-pane.active li>a', function(e) {
-            var me = $(this);
-            var target = me.data('target');
-            var url = me.data('url');
-            $('.x-menus').hide();
-            $('.x-content').show();
-            loadURL(url, target);
-        })
+var jsonBsfw = [{
+        type: '治安业务',
+        tab_id: 'zafw',
+        list: [
+            { title: '爆破物品使用、购买、运输、储存许可指南', href: 'bpwpsy' },
+            { title: '刊刻企业印章许可指南', href: 'kkqyyzxkzn' },
+            { title: '举办大型焰火燃放活动指南', href: 'jbdxyhrfhdzn' }
+        ]
+    },
+    {
+        type: '治安业务',
+        tab_id: 'zafws',
+        list: [
+            { title: '爆破物品使用、购买、运输、储存许可指南', href: 'bpwpsy' },
+            { title: '刊刻企业印章许可指南', href: '' },
+            { title: '举办大型焰火燃放活动指南', href: '' }
+        ]
     }
+];
 
-    function generateTab() {}
-
-    function generateTabList(config) {
-        var tabHtml = '';
-        $.each(config.data, function(i, o) {
-            tabHtml += '<div class="panel panel-default">'
-                    +  '<div class="panel-heading" role="tab" id="'+ o.tab_id +'">'
-                    +  '<h4 class="panel-title">'
-                    +  '<a '+ (i==0? '':'class="collapsed"') +' role="button" data-parent="#'+ config.type +'list" data-toggle="collapse" href="#labels_'+ o.tab_id +'" aria-expanded="'+ (i==0? 'true':'false') +'" aria-controls="labels_'+ o.tab_id +'">'+ o.type + '</a></h4></div>'
-                    +  '<div id="labels_'+ o.tab_id +'" class="panel-collapse collapse '+ (i==0? 'in':'') +'" role="tabpanel" aria-labelledby="'+ o.tab_id +'">'
-                    +  '<ul class="list-group">';
-
-            $.each(o.list, function(i, n) {
-                tabHtml += '<li class="list-group-item"><a href="javascript:void(0);" data-url="'+ config.showHtml +'" data-target="'+ n.href +'" >'+ n.title +'</a></li>'
-            })
-
-            tabHtml += '</ul></div><iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe></div>';
-        })
-        $('#'+ config.type +'>div.x-'+ config.type +'list').empty().append(tabHtml);
+var jsonFlfg = [{
+        type: '执法依据',
+        tab_id: 'zfyj',
+        list: [
+            { title: '公安机关人民警察现场制止违法犯罪行为操作规程', href: 'gajgrmjc' },
+            { title: '中华人民共和国禁毒法', href: 'zhrmghgjdf' },
+            { title: '中华人民共和国治安管理处罚', href: 'zhrmghgzaglcf' }
+        ]
+    },
+    {
+        type: '职业纪律',
+        tab_id: 'zyjl',
+        list: [
+            { title: '公安机关督察条例', href: 'gajgdctl' },
+            { title: '公安机关人民警察奖励条令', href: 'gajgrmjcjltl' },
+            { title: '中华人民共和国人民警察使用警械和武器条例', href: 'zhrmghgrmjcsyjxhwqtl' }
+        ]
+    },
+    {
+        type: '受案范围',
+        tab_id: 'safw',
+        list: [
+            { title: '行政案件受案', href: 'xzajsa' },
+            { title: '刑事立案', href: 'xsla' }
+        ]
     }
+];
 
-    function loadURL(a, target) {
-        var b = $('div.x-content');
-        $.ajax({
-            "type" : "GET",
-            "url" : a,
-            "dataType" : "html",
-            "cache" : !0,
-            "beforeSend" : function() {
-                b.removeData().html(""),
+$(document).ready(function() {
+    bind();
+    $('#myTabs a:first').trigger('click');
+});
+
+function bind() {
+    $.root = $('body');
+
+    $.root.on('click', '#myTabs a', function(e) {
+        var key = {
+            bsfw: { data: jsonBsfw, type: 'bsfw', showHtml: 'table.html' },
+            flfg: { data: jsonFlfg, type: 'flfg', showHtml: 'content.html' }
+        }
+        var me = $(this);
+        var type = me.data('type');
+        generateTabList(key[type]);
+    })
+
+    $.root.on('click', '.tab-pane.active li>a', function(e) {
+        var me = $(this);
+        var target = me.data('target');
+        var url = me.data('url');
+        $('.x-menus').hide();
+        $('.x-content').show();
+        loadURL(url, target);
+    })
+}
+
+function generateTab() {}
+
+function generateTabList(config) {
+    var tabHtml = '';
+    $.each(config.data, function(i, o) {
+        tabHtml += '<div class="panel panel-default">' +
+            '<div class="panel-heading" role="tab" id="' + o.tab_id + '">' +
+            '<h4 class="panel-title">' +
+            '<a ' + (i == 0 ? '' : 'class="collapsed"') + ' role="button" data-parent="#' + config.type + 'list" data-toggle="collapse" href="#labels_' + o.tab_id + '" aria-expanded="' + (i == 0 ? 'true' : 'false') + '" aria-controls="labels_' + o.tab_id + '">' + o.type + '</a></h4></div>' +
+            '<div id="labels_' + o.tab_id + '" class="panel-collapse collapse ' + (i == 0 ? 'in' : '') + '" role="tabpanel" aria-labelledby="' + o.tab_id + '">' +
+            '<ul class="list-group">';
+
+        $.each(o.list, function(i, n) {
+            tabHtml += '<li class="list-group-item"><a href="javascript:void(0);" data-url="' + config.showHtml + '" data-target="' + n.href + '" >' + n.title + '</a></li>'
+        })
+
+        tabHtml += '</ul></div><iframe id="tmp_downloadhelper_iframe" style="display: none;"></iframe></div>';
+    })
+    $('#' + config.type + '>div.x-' + config.type + 'list').empty().append(tabHtml);
+}
+
+function loadURL(a, target) {
+    var b = $('div.x-content');
+    $.ajax({
+        "type": "GET",
+        "url": a,
+        "dataType": "html",
+        "cache": !0,
+        "beforeSend": function() {
+            b.removeData().html(""),
                 b.html('<div class="dropload-load"><span class="loading"></span>加载中...</div>'),
                 b[0] == $("#content")[0] && ($("body").find("> *").filter(":not(" + ignore_key_elms + ")").empty().remove(),
-                drawBreadCrumb(),
-                $("html").animate({
-                    "scrollTop" : 0
-                }, "fast"))
-            },
-            "success" : function(a) {
-                b.css({
-                    "opacity" : "0.0"
-                }).html(a).append('<input type="hidden" name="type" value="'+ target +'"/>').delay(50).animate({
-                    "opacity" : "1.0"
+                    drawBreadCrumb(),
+                    $("html").animate({
+                        "scrollTop": 0
+                    }, "fast"))
+        },
+        "success": function(a) {
+            b.css({
+                    "opacity": "0.0"
+                }).html(a).append('<input type="hidden" name="type" value="' + target + '"/>').delay(50).animate({
+                    "opacity": "1.0"
                 }, 300),
                 a = null,
                 b = null
-            },
-            "error" : function(c, d, e) {
-                b.html('<h4 class="ajax-loading-error"><i class="fa fa-warning txt-color-orangeDark"></i> Error requesting <span class="txt-color-red">' + a + "</span>: " + c.status + ' <span style="text-transform: capitalize;">' + e + "</span></h4>")
-            },
-            "async" : !0
-        })
-    }
+        },
+        "error": function(c, d, e) {
+            b.html('<h4 class="ajax-loading-error"><i class="fa fa-warning txt-color-orangeDark"></i> Error requesting <span class="txt-color-red">' + a + "</span>: " + c.status + ' <span style="text-transform: capitalize;">' + e + "</span></h4>")
+        },
+        "async": !0
+    })
+}
 </script>
 
 </html>
