@@ -47,17 +47,26 @@ body {
 
 .x-grid {
     margin-top: 50px;
-    border: 1px solid #b4d6f1;
-    border-top: 4px solid #b4d6f1;
-    border-left: 0;
+    /*border: 1px solid #b4d6f1;
+    border-top: 5px solid #7ac3fc;*/
     border-bottom: 0;
-    background-color: #FFF;
+    background-color: #f8fcff;
+}
+
+.x-grid .row {
+    border-bottom: 1px solid #b4d6f1;
+}
+
+.x-grid .row>div:first-child {
+    border-right: 1px solid #b4d6f1;
+}
+
+.x-grid .row>div:last-child {
+    border-left: 1px solid #b4d6f1;
 }
 
 .x-grid [class^=col-] {
     padding: 15px;
-    border-left: 1px solid #b4d6f1;
-    border-bottom: 1px solid #b4d6f1;
 }
 
 .x-text {
@@ -125,16 +134,42 @@ var jsonBsfw = [{
         list: [
             { title: '爆破物品使用、购买、运输、储存许可指南', href: 'bpwpsy' },
             { title: '刊刻企业印章许可指南', href: 'kkqyyzxkzn' },
+            { title: '办理旅馆业特种行业许可证指南', href: 'blygytzhxxkzzn'},
             { title: '举办大型焰火燃放活动指南', href: 'jbdxyhrfhdzn' }
         ]
     },
     {
-        type: '治安业务',
-        tab_id: 'zafws',
+        type: '户籍业务',
+        tab_id: 'hjyw',
         list: [
-            { title: '爆破物品使用、购买、运输、储存许可指南', href: 'bpwpsy' },
-            { title: '刊刻企业印章许可指南', href: '' },
-            { title: '举办大型焰火燃放活动指南', href: '' }
+            { title: '设立集体户口', href: 'sljthk' },
+            { title: '出国、出境公民在国外、境外所生子女入户登记', href: 'cgcjgmzgwjwssznrhdj' },
+            { title: '婚生婴儿或超计划生育的婴儿入户登记', href: 'hsyehcjhsydyerhdj' }
+        ]
+    },
+    {
+        type: '出入境业务',
+        tab_id: 'crjyw',
+        list: [
+            { title: '办理出入境护照指南', href: 'blcrjhzzn' },
+            { title: '办理台湾通行证指南', href: 'bltwtxzzn' },
+            { title: '办理港澳台通行证指南', href: 'blgattxzzn' }
+        ]
+    },
+    {
+        type: '禁毒业务',
+        tab_id: 'jdyw',
+        list: [
+            { title: '办理易制毒化学品购买许可证', href: 'blyzdhxpgmxkz' },
+            { title: '剧毒化学品公路运输通行证', href: 'jdhxpglystxz' }
+        ]
+    },
+    {
+        type: '网安业务',
+        tab_id: 'wayw',
+        list: [
+            { title: '新开网吧指南', href: 'xkwbzn' },
+            { title: '网吧年审指南', href: 'wbnszn' }
         ]
     }
 ];
