@@ -199,6 +199,10 @@ body {
     <div class="x-menus">
         <div class="bs-example bs-example-tabs" data-example-id="togglable-tabs">
             <ul id="myTabs" class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="">
+                    <a href="/didiweb/news/page/apps/content.html?page=consulting" target="_self">
+                    业务咨询</a>
+                </li>
                 <li role="presentation" class="active">
                     <a href="#bsfw" role="tab" id="bsfw-tab" data-type="bsfw" data-toggle="tab" aria-controls="bsfw" aria-expanded="true">
                     办事指南</a>
@@ -301,7 +305,13 @@ var jsonFlfg = [{
 
 $(document).ready(function() {
     bind();
-    $('#myTabs a:first').trigger('click');
+    var page = getParams('page');
+    if(page == "bszn") {
+        console.log(page)
+        $('#myTabs a:eq(1)').trigger('click');
+    }else if(page == "flfg"){
+        $('#myTabs a:eq(2)').trigger('click');
+    }
 });
 
 function bind() {
@@ -314,6 +324,7 @@ function bind() {
         }
         var me = $(this);
         var type = me.data('type');
+        if (type == "ywzx") return;
         generateTabList(key[type]);
     })
 
@@ -379,6 +390,22 @@ function loadURL(a, target) {
         "async": !0
     })
 }
+
+    // url传参数变化类别
+  function getParams(fndname) {
+    var url = location.search; //一般的查询
+    var query = url.substr(url.indexOf("?") + 1);
+    var pairs = query.split("&"); //在逗号处断开
+    for (var i = 0; i < pairs.length; i++) {
+        var pos = pairs[i].indexOf('='); //查找name=value
+        if (pos == -1)
+            continue; //如果没有找到就跳过
+        var argname = pairs[i].substring(0, pos); //提取name
+        var value = pairs[i].substring(pos + 1); //提取value
+        if (argname == fndname)
+            return value;
+    }
+  }
 </script>
 
 </html>
